@@ -1,0 +1,98 @@
+<div class="inner_page-banner"></div>
+<hr>
+<!-- Contenedor de menu superior -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button class="btn" data-toggle="modal" data-target="#modal">Agregar Menu</button>
+        </div>
+        <div class="col col-sm-3">
+            <select class="form-control">
+                <option>Tipo </option>
+            </select>
+        </div>
+    </div>
+</div>
+<hr>
+<!-- Modal para el registro de nuevo restaurante  -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg text-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="text-center">Nuevo Menu</h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <img src="../../../assets/illustration-restaurant.gif" width="60%" id="img">
+                        <div class="card rounded">
+                            <div class=" card-body">
+                                <div class="container">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="Nombre">
+                                                Nombre del Menu
+                                            </label>
+                                            <input type="text" class="form-control" id="" placeholder="Ej: Rodicio">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="departamento">
+                                                Tipo de Menu
+                                            </label>
+                                            <select class="form-control custom-select">
+                                                <option>
+                                                    Seleccione una opcion
+                                                </option>
+                                                <option value="1">
+                                                    Vegano
+                                                </option>
+                                                <option value="">
+                                                    Vegetariano
+                                                </option>
+                                                <option value="">
+                                                    Carnes rojas y Aves
+                                                </option>
+                                                <option value="">
+                                                    Pescados y Mariscos
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="form-group align-self-center">
+                                <a class="btn btn-primary">Enviar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Conteiner = Contenedor de lista de restaurantes -->
+<main role="main" class="container">
+    <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm" data-toggle="modal" data-target="#profileModal">
+        <img class="mr-3" src="../../../assets/menu.jpg" alt="" width="48" height="48" />
+        <div class="lh-100">
+            <h6 class="mb-0 lh-100"> Menus Registrados</h6>
+            <small id="opnumber">operators.length </small>
+        </div>
+    </div>
+    <div id="userslist" class="my-3 p-3 bg-white rounded shadow-sm">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Nombre Menus</h6>
+        <div id="useritem" class="media text-muted pt-3">
+            <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
+                <rect width="100%" height="100%" fill="#007bff" />
+            </svg>
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark item-user"> item.name </strong>
+                </div>
+                <span class="d-block"> item.email </span>
+            </div>
+        </div>
+    </div>
+</main>
