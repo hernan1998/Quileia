@@ -43,6 +43,9 @@ label{
     color: black;
     padding: 5px;
 }
+p{
+    font-family: 'Roboto';
+}
 .form-group{
     margin-top: 25px;
     margin-left: 5%;

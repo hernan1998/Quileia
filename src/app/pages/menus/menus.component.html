@@ -4,7 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <button class="btn" data-toggle="modal" data-target="#modal">Agregar Menu</button>
+            <button class="btn" data-toggle="modal" data-target="#modal" (click)="openModalnew()">Agregar
+                Menu</button>
         </div>
         <div class="col col-sm-3">
             <select class="form-control">
@@ -20,7 +21,7 @@
     <div class="modal-dialog modal-lg text-center" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="text-center">Nuevo Menu</h1>
+                <h1 class="text-center" id="titulo">Nuevo Menu</h1>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -34,35 +35,68 @@
                                             <label for="Nombre">
                                                 Nombre del Menu
                                             </label>
-                                            <input type="text" class="form-control" id="" placeholder="Ej: Rodicio">
+                                            <input type="text" class="form-control" id="nombre"
+                                                placeholder="Ej: Rodicio">
                                         </div>
                                         <div class="form-group">
                                             <label for="departamento">
                                                 Tipo de Menu
                                             </label>
-                                            <select class="form-control custom-select">
-                                                <option>
-                                                    Seleccione una opcion
+                                            <select class="form-control custom-select" id="tipo">
+                                                <option value=1>
+                                                    Entrada
                                                 </option>
-                                                <option value="1">
-                                                    Vegano
+                                                <option value=2>
+                                                    Plato Fuerte
                                                 </option>
-                                                <option value="">
-                                                    Vegetariano
+                                                <option value=3>
+                                                    Postres
                                                 </option>
-                                                <option value="">
-                                                    Carnes rojas y Aves
-                                                </option>
-                                                <option value="">
-                                                    Pescados y Mariscos
+                                                <option value=4>
+                                                    Bebidas
                                                 </option>
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Ingredientes">
+                                                Ingredientes del menu
+                                            </label>
+                                            <input type="text" class="form-control" id="ingrediente"
+                                                placeholder="Nombre. Ej: arroz">
+                                            <hr>
+                                            <input type="number" class="form-control" id="caloria"
+                                                placeholder="Calorias. Ej: 1500">
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col">
+                                                    Ingredientes:
+                                                </div>
+                                                <div class="col" *ngFor="let item of ingredientes">
+                                                    {{ item.nombre }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <a class="btn" (click)="addIngrediente()">Añadir ingrediente</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Precio">
+                                                Precio del Menu
+                                            </label>
+                                            <input type="number" class="form-control" id="precio"
+                                                placeholder="Ej: 25.000">
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="form-group align-self-center">
-                                <a class="btn btn-primary">Enviar</a>
+                                <a *ngIf=New class="btn btn-primary" data-toggle="modal" data-target="#modal"
+                                    (click)="addMenu()">Enviar</a>
+                                <a *ngIf=!New class="btn btn-primary" data-toggle="modal" data-target="#modal"
+                                    (click)="addMenu()">Modificar</a>
+                            </div>
+                            <div class="form-group">
+                                <a *ngIf=!New class="btn btn-primary" data-toggle="modal" data-target="#modal"
+                                    (click)="removeMenu()">Eliminar</a>
                             </div>
                         </div>
                     </div>
@@ -77,21 +111,22 @@
         <img class="mr-3" src="../../../assets/menu.jpg" alt="" width="48" height="48" />
         <div class="lh-100">
             <h6 class="mb-0 lh-100"> Menus Registrados</h6>
-            <small id="opnumber">operators.length </small>
+            <small id="opnumber"> {{ menus.length }} </small>
         </div>
     </div>
     <div id="userslist" class="my-3 p-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">Nombre Menus</h6>
-        <div id="useritem" class="media text-muted pt-3">
+        <div id="useritem" class="media text-muted pt-3" *ngFor="let menu of menus">
             <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
                 <rect width="100%" height="100%" fill="#007bff" />
             </svg>
             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <strong class="text-gray-dark item-user"> item.name </strong>
+                    <strong class="text-gray-dark item-user"> {{ menu.nombre }} </strong>
+                    <a class="btn" data-toggle="modal" data-target="#modal" (click)="openModal(menu.id)">Modificar</a>
                 </div>
-                <span class="d-block"> item.email </span>
+                <span class="d-block">Precio: ${{ menu.precio }} </span>
             </div>
         </div>
     </div>
