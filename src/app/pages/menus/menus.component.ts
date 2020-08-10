@@ -27,6 +27,7 @@ export class MenusComponent implements OnInit {
           nombre: e.payload.doc.data()['nombre'],
           precio: e.payload.doc.data()['precio'],
           tipo: e.payload.doc.data()['tipo'],
+          calorias: e.payload.doc.data()['calorias'],
           ingredientes: e.payload.doc.data()['ingredientes'],
         })
       })
@@ -38,7 +39,7 @@ export class MenusComponent implements OnInit {
     var nombre = $('#nombre').val().toString();
     var price = $('#precio').val().toString();
     var precio = parseFloat(price);
-    var tipo = $('#tipo').val().toString();
+    var tipo = +$('#tipo').val();
     var ing = this.ingredientes;
     if (this.New) {
       /* Para crear un nuevo restaurante */
@@ -47,6 +48,7 @@ export class MenusComponent implements OnInit {
         precio: precio,
         tipo: tipo,
         ingredientes: ing,
+        calorias: this.calorias,
       });
     } else {
       /* Paara modificar un restaurante ya creado */
@@ -55,6 +57,7 @@ export class MenusComponent implements OnInit {
         precio: precio,
         tipo: tipo,
         ingredientes: ing,
+        calorias: this.calorias,
       }, this.auxid)
     }
   }
@@ -62,10 +65,15 @@ export class MenusComponent implements OnInit {
   /* Funcion agregar ingredientes al menu */
   addIngrediente() {
     var nombre = $('#ingrediente').val().toString();
-    var caloria = +$('#caloria').val();
-    this.calorias = this.calorias + caloria;
-    this.ingredientes.push({ nombre, caloria })
-    console.log(this.ingredientes, this.calorias)
+    var caloria: number = +$('#caloria').val();
+    if ((this.calorias + caloria) > 2000) {
+      var str = "No puede exceder 2000 calorias. Actualmente: " + this.calorias;
+      window.alert(str);
+    } else {
+      this.calorias = this.calorias + caloria;
+      console.log(this.calorias)
+      this.ingredientes.push({ nombre, caloria })
+    }
   }
 
   /* Funcion para eliminar menu */
@@ -78,6 +86,7 @@ export class MenusComponent implements OnInit {
     this.New = false;
     this.auxid = id;
     var found = this.menus.find(element => element.id == id);
+    this.calorias = found.calorias;
     this.ingredientes = found.ingredientes;
     $('#nombre').val(found.nombre);
     $('#tipo').val(found.tipo);
@@ -87,6 +96,7 @@ export class MenusComponent implements OnInit {
   openModalnew() {
     this.New = true;
     this.ingredientes = [];
+    this.calorias = 0;
     $('#nombre').val("");
     $('#tipo').val("");
     $('#precio').val("");

@@ -26,7 +26,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col">
-                        <img src="../../../assets/illustration-restaurant.gif" width="60%" id="img">
+                        <img src="../../../assets/newrestaurant.gif" width="60%" id="img">
                         <div class="card rounded">
                             <div class=" card-body">
                                 <div class="container">
@@ -85,6 +85,29 @@
                                             <input type="text" class="form-control" id="cierre"
                                                 placeholder="Ej: 10:00 p.m.">
                                         </div>
+                                        <div class="form-group" *ngIf=!New>
+                                            <hr>
+                                            <label for="">
+                                                Menus
+                                            </label>
+                                            <div class="row">
+                                                <div class="col" *ngFor="let item of menuRestaurante">
+                                                    <h4>{{ item.nombre }}</h4>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row" id="menus" *ngFor="let menu of menus">
+                                                <div class="col">
+                                                    <h4>
+                                                        {{menu.nombre}}
+                                                    </h4>
+                                                </div>
+                                                <div class="col">
+                                                    <a class="btn" (click)="addMenu(menu.id)">Agregar menu</a>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -105,6 +128,84 @@
         </div>
     </div>
 </div>
+<!-- Modal para ver los menus del restaurante -->
+<div class="modal custom-modal fade" id="modalMenu" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg text-center" role="document">
+        <div class="modal-content">
+            <div class="modal-body custom-modal">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="row">
+                    <div class="col">
+                        <img src="../../../assets/menuR.jpg" width="60%" id="img">
+                    </div>
+                </div>
+                <h3>
+                    Entradas
+                </h3>
+                <div class="row" *ngFor="let entradas of entrada">
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{entradas.nombre}}
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{entradas.precio}}
+                        </h3>
+                    </div>
+                </div>
+                <h3>
+                    Plato Fuerte
+                </h3>
+                <div class="row" *ngFor="let platos of platofuerte">
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{platos.nombre}}
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{platos.precio}}
+                        </h3>
+                    </div>
+                </div>
+                <h3>
+                    Postres
+                </h3>
+                <div class="row" *ngFor="let postres of postre">
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{postres.nombre}}
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{postres.precio}}
+                        </h3>
+                    </div>
+                </div>
+                <h3>
+                    Bebidas
+                </h3>
+                <div class="row" *ngFor="let bebida of Bebidas">
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{bebida.nombre}}
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <h3 style="font-size: 40px;">
+                            {{bebida.precio}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Main Conteiner = Contenedor de lista de restaurantes -->
 <main role="main" class="container">
     <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm" data-toggle="modal" data-target="#profileModal">
@@ -117,13 +218,14 @@
     <div id="userslist" class="my-3 p-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">Nombre restaurantes</h6>
         <div id="restItem" class="media text-muted pt-3" *ngFor="let restaurante of restaurantes">
-            <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
-                <rect width="100%" height="100%" fill="#007bff" />
-            </svg>
+            <img class="mr-2 rounded" width="82" height="62" focusable="false" role="img"
+                src="../../../assets/restaurante.png" data-toggle="modal" data-target="#modalMenu"
+                (click)="openMenu(restaurante.id)">
             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <strong class="text-gray-dark item-user"> {{ restaurante.nombre }} </strong>
+                    <strong class="text-gray-dark item-user" data-toggle="modal" data-target="#modalMenu"
+                        (click)="openMenu(restaurante.id)">
+                        {{ restaurante.nombre }} </strong>
                     <a class="btn" data-toggle="modal" data-target="#modal"
                         (click)="openModal(restaurante.id)">Modificar</a>
                 </div>

@@ -1,6 +1,6 @@
 .inner_page-banner {
     text-align: center;
-    background: url(../../../assets/header.jpg) no-repeat center;
+    background: url(../../../assets/newheader.gif) no-repeat center;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -55,4 +55,19 @@ label{
 }
 #img{
     align-self: center;
+}
+.custom-modal {
+    background-color: rgb(30,30,30);
+}
+h3{
+    color: #fff;
+    font-family: 'Cursiva';
+    font-size: 50px;
+    padding-top: 5%;
+}
+h4{
+    font-family: 'Roboto';
+}
+#menus{
+    padding-bottom: 15px;
 }

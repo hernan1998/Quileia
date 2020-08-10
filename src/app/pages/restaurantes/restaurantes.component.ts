@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DbService } from '../../services/db.service';
+import { data } from 'jquery';
 
 
 @Component({
@@ -10,9 +11,15 @@ import { DbService } from '../../services/db.service';
 export class RestaurantesComponent implements OnInit {
 
   /* Variables */
-  restaurantes = [];
+  restaurantes = []; // Array de todos los restaurantes
   New: boolean; // Variable para determinar si se esta creando nuevo restaurante o modificando 
   auxid: String; // Variable auxiliar id para modificar un restaurante
+  menus = []; // Array de todos los menus previamente creados
+  menuRestaurante = []; // Array con los menus de un restaurante
+  entrada = []; // Array de entradas
+  platofuerte = []; // Array de platos fuertes
+  postre = []; // Array de postres
+  Bebidas = []; // Arrya de bebidas
 
   constructor(private db: DbService) { }
 
@@ -30,6 +37,19 @@ export class RestaurantesComponent implements OnInit {
           apertura: e.payload.doc.data()['apertura'],
           cierre: e.payload.doc.data()['cierre'],
           tipo: e.payload.doc.data()['tipo'],
+          menu: e.payload.doc.data()['menu'],
+        })
+      })
+    });
+    /* Obtener datos de los menus */
+    this.db.getMenus().subscribe(data => {
+      this.menus = [];
+      data.map(e => {
+        this.menus.push({
+          id: e.payload.doc.id,
+          nombre: e.payload.doc.data()['nombre'],
+          precio: e.payload.doc.data()['precio'],
+          tipo: e.payload.doc.data()['tipo'],
         })
       })
     });
@@ -43,6 +63,7 @@ export class RestaurantesComponent implements OnInit {
     var apertura = $('#apertura').val().toString();
     var cierre = $('#cierre').val().toString();
     var tipo: number = +$('#tipo').val();
+    var menu = this.menuRestaurante;
     if (this.New) {
       /* Para crear un nuevo restaurante */
       this.db.createRestaurantes({
@@ -62,9 +83,16 @@ export class RestaurantesComponent implements OnInit {
         apertura: apertura,
         cierre: cierre,
         tipo: tipo,
+        menu: menu,
       }, this.auxid)
     }
+  }
 
+  /* Funcion para agregar menus al restaurante */
+  addMenu(id: String) {
+    var found = this.menus.find(element => element.id == id);
+    this.menuRestaurante.push(found);
+    console.log(this.menuRestaurante)
   }
 
   /* Eliminar Restaurante */
@@ -77,6 +105,7 @@ export class RestaurantesComponent implements OnInit {
     this.New = false;
     this.auxid = id;
     var found = this.restaurantes.find(element => element.id == id);
+    this.menuRestaurante = [];
     $('#nombre').val(found.nombre);
     $('#razon').val(found.razon);
     $('#ciudad').val(found.ciudad);
@@ -94,5 +123,16 @@ export class RestaurantesComponent implements OnInit {
     $('#cierre').val("");
     $('#tipo').val("");
     $('#titulo').text('Nuevo Restaurante');
+  }
+  openMenu(id: String) {
+    var found = this.restaurantes.find(element => element.id == id);
+    this.entrada = found.menu.filter(item => item.tipo == 1);
+    console.log('tipo 1: ', this.entrada);
+    this.platofuerte = found.menu.filter(item => item.tipo == 2);
+    console.log('tipo 2: ', this.platofuerte);
+    this.postre = found.menu.filter(item => item.tipo == 3);
+    console.log('tipo 3: ', this.postre);
+    this.Bebidas = found.menu.filter(item => item.tipo == 4);
+    console.log('tipo 4: ', this.Bebidas);
   }
 }
